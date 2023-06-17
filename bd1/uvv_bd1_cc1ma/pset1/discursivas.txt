@@ -1,0 +1,98 @@
+Responda às seguintes questões discursivas, nas folhas de papel almaço: 
+
+
+Questão 1: O que são sistemas de controles de versões? Por que são importantes? 
+
+	  R: Sistemas de controles de versões são um tipo de sistema que registra mudanças a um arquivo ou grupo de arquivos ao longo do tempo, para que você possa retroceder para versões específicas no futuro. Eles permitem que você reverta arquivos específicos de volta para um estado anterior, reverta o projeto inteiro de volta para um estado anterior, comparar mudanças ao longo do tempo, conferir quem fez a última modificação que pode estar causando algum problema, quem inseriu alguma mudança, quando e mais.
+
+
+Questão 2: Qual a diferença entre o Git e o GitHub? Como eles estão relacionados? É possível usar um sem o outro? 
+	R: O gitHub é uma plataforma/rede social onde pessoas podem disponibilizar os repositórios git de maneira mais fácil. É possível usar o Git sem o GitHub, mas eu acredito que é impossível usar o Github sem usar o Git.        
+
+
+
+
+Questão 3: O Git é um sistema distribuído de controle de versões. O que significa isso? 
+
+	  R: Em um sistema distribuído de controle de versões os clientes não tem acesso apenas as últimas versões de um arquivo, pelo contrário, eles baixam o repositório por inteiro, incluindo todo o histórico de mudanças.
+
+
+Questão 4: Faça um esquema do fluxo de trabalho do Git, explicando em detalhes o que é o diretório de trabalho, a área de staging e o repositório. Como os arquivos se movem entre essas 	áreas? Como os três estados principais dos arquivos (commited, modified e staged) se relacionam com essas áreas?
+
+
+	R: Um arquivo salvo no Git é categorizado como commited e armazenado em um repositório, ao baixar  o arquivo e alterá-lo, ele fica categorizado como modified no diretório de trabalho. Para enviar tal arquivo novamente para o repositório, é necessário marcá-lo como staged, que significa que ele é um arquivo modificado na área de staging que será enviado para a próxima versão do repositório.
+
+
+Questão 5: Quais erros você consegue encontrar nesse projeto? Erros nas colunas?
+	Erros nas cardinalidades? Erros na identificação dos relacionamentos? Se você encontrar erros no projeto, identifique quais são os erros e explique o que está errado
+	(atenção: não altere o projeto).
+
+	R: 1º erro: na tabela 'pedidos_itens' a coluna 'envio_id' pode ser NULL. Isso é um erro pois é diferente da coluna 'envio_id' correspondente na tabela 'envios'. Além de ser um erro lógico do próprio projeto. Interpretando o projeto, como 'envio_id' é NOT NULL na tabela 'envios' assume-se que no caso de retirada na loja eles assimilem um código padronizado para retirada, por exemplo 0 ou -1, dito isso, eu não sei se nesse caso é mais ideal padronizar (0 ou -1) ou permitir que fique nulo.
+
+	   2º erro: a coluna 'preco_unitario' na tabela 'pedidos_itens' não é FK da tabela produtos da coluna de mesmo nome. Isso permite que um produto apresente preços diferentes nessas das tabelas.
+
+	   3º erro: na tabela 'produtos' a coluna 'preco_unitario' permite NULL, nenhuma loja deveria permitir o erro do usuário de colocar o preço nulo.
+
+	   4º erro: Mesmo que muitos projetos de banco de dados não sejam otimizados idealmente, acredito que há um erro de otimização no nosso projeto. Na minha opinião, a tabela 'envios' deveria estar relacionada com a tabela 'pedidos' e não com a tabela 'pedidos_itens', de forma que eu consiga ver o 'envio_id' diretamente da tabela 'pedidos', onde é mais relevante.
+	   5º erro: Na tabela pedidos_itens, a coluna quantidade deveria ter escala (por exemplo, NUMERIC(10,2)) para que permitisse vendas no quilo, como frutas ou carne.
+	   
+
+Questão 6: Quais tabelas do projeto representam relacionamentos do tipo N:N? Identifique as tabelas e explique porque é um relacionamento N:N; Se não houver relacionamentos N:N, explique se isso seria um erro.
+
+	R: Os pares de tabelas são: (clientes, lojas), (pedidos, produtos), (produtos, envios), (pedidos, envios), (lojas, produtos), pois todas esses pares de tabelas tem relacionamento 1:N com uma tabela intermediária.
+
+
+Questão 7: Na tabela “pedidos_itens” a coluna identificada com o nome de
+	“numero_da_linha” não faz parte da PK composta. Isso está certo ou errado?
+	Ocorreria alguma limitação à funcionalidade do banco de dados ao manter essa co-
+	luna fora da PK?
+
+	R:  Aqui o pedido é dividido em linhas onde cada linha é um produto em quantidade qualquer e que apenas tal linha se referencia a tal produto. Consequentemente, é errado a coluna 'numero_da_linha' não fazer parte da PK composta, pois ela é identificador da tabela 'pedidos_itens'. Para que funcione adequadamente, é necessário restringir que o 'numero_da_linha' seja único.
+
+Questão 8 Por que a tabela “pedidos_itens” faz relacionamentos identifica-
+	dos com as tabelas pedidos e produtos, e um relacionamento não identificado
+	com a tabela envios?
+	
+	R: Porque 'envio_id' não faz parte da PFK na tabela 'pedidos_itens' e relacionamentos identificados são usados onde queremos que a chave primária que está migrando também esteja na área das chaves primária/composta da tabela que está "recebendo".
+
+
+Questão 9: Qual é o único tipo de relacionamento que pode guardar dados? Por
+	quê? Existe algum relacionamento assim nesse projeto? Se não existir, você suge-
+	riria trocar alguns dos relacionamentos existentes para melhorar o projeto?
+
+	R: O relacionamento N:N guarda dados através de uma tabela de associação que armazena as conexões entre as entidades relacionadas. Essa tabela intermediária permite que os dados de associação sejam mantidos e acessados. Sim, existem relacionamentos N:N no projeto, os mesmos citados na questão 6.
+
+
+Questão 10: Algumas colunas estão utilizando o tipo de dados “BLOB”. Que tipo
+	de dado é esse? Quando sua utilização é adequado? O uso desse tipo de dados no
+	projeto é correto? Explique.
+
+	R: Blob é um tipo de dado que representa coleções de dados binários, normalmente essas coleções são imagens, audios ou outras formas multimídia. O uso é adequado nas colunas 'logo' e 'imagem', mas inadequado na coluna 'detalhes', já que um arquivo de texto bastava.
+	
+
+Questão 11: Qual a diferença entre banco de dados, usuário e esquema no Post-
+greSQL?
+
+	R:um banco de dados é uma coleção de dados relacionados, um usuário é uma entidade que se conecta e interage com o banco de dados, e um esquema é uma estrutura lógica que organiza e agrupa os objetos dentro de um banco de dados.
+
+
+Questão 12: Por que um esquema é importante?
+
+	R: Os esquemas são importantes porque divide o banco de dados em seções mais fáceis de trabalhar, além de permitir que existam tabelas com os mesmos nomes em esquemas diferentes.
+
+Questão 13: Se você não definir um esquema específico, onde os objetos do banco
+de dados (tabelas, relacionamentos, dados, etc.) serão gravados? Isso é bom ou
+ruim? Por que?
+
+	R: Os objetos serão gravados no esquema público. Para os propósitos desse PSET isso é ruim, mas no geral não tem problema, apesar de ser não ser recomendado o uso. Com o uso de esquemas fica mais fácil gerenciar permissões aos usuários, além de permitir tabelas com nomes iguais em esquemas diferentes.
+
+Questão 14: Agora que você já implementou o projeto no PostgreSQL, tem alguma
+sugestão de melhoria a fazer para o projeto? Como ele poderia ser melhorado?
+
+	R: Como mencionei na Questão 5, acredito que a tabela envios devia estar relacionada com a tabela pedidos e não com a tabela pedidos_itens.
+
+
+
+
+
+
