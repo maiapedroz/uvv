@@ -143,6 +143,6 @@ function resetGame() {
     if (gameInterval != undefined) clearInterval(gameInterval);
 }
 
-addCardButton.addEventListener('click', () => { for(let i = 0; i < 30; i++) addCard() });
+addCardButton.addEventListener('click', () => { for(let i = 0; i < 1; i++) addCard() });
 resetGameButton.addEventListener('click', resetGame);
 startGameButton.addEventListener('click', startGame);
