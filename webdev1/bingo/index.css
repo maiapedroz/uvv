@@ -1,0 +1,47 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #111;
+    color: #fff;
+}
+
+#cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.card {
+    border: 1px solid white;
+    margin: 5px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
+    background-color: #aaa;
+}
+
+.number {
+    border: 1px solid #000;
+    padding: 5px;
+    background-color: #eee;
+    text-align: center;
+    color: #111;
+}
+
+#picked-number {
+    margin-top: 20px;
+    font-size: 2em;
+    text-align: center;
+}
+
+.picked {
+    background-color: green;
+    color: white;
+}
+
+.winner {
+    border-color: green;
+    background-color: blue;
+}
