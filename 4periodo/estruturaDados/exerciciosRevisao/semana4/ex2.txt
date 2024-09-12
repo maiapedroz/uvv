@@ -1,0 +1,45 @@
+(a) Defina os termos recursivo e iterativo. É possível que uma função utilize as duas abordagens?
+
+	Resposta:	Recursivo é quando se chama uma função chama a si mesma e iterativa é quando roda o mesmo código várias vezes sem repetir a função inteira.
+	
+(b) Explique o que é o paradigma recursivo.
+	
+	Resposta: 	A forma correta de se solucionar um problema com recursão, utilizando com casos simples e redução da complexidade do problema
+	
+(c) Quais as duas propriedades que um problema deve ter para que a recursão seja uma possibilidade
+como estratégia de solução?
+
+	R:	O problema deve ser reduzido em problemas iguais só que menores até chegar o ponto de caso simples.
+	
+(d) Costumamos dizer que a recursão é um exemplo de estratégia dividir para conquistar. Expli-
+que.
+
+	R:	Solucionamos primeiro os problemas menores até voltamos até o problema inicial (e maior).
+
+(e) O que queremos dizer por salto de fé recursivo? Por que esse conceito é importante para você
+que é programador?
+
+	R:	Que o programador não precisa se preocupar com o que acontece com os stack frames subsequentes, que se der algum erro é necessario corrigir o passo de reduzir complexidade sem olhar o stack frame
+
+(f ) Durante nosso estudo do fatorial recursivo nós fizemos o rastreamento de todo o processo das
+chamadas, mostrando todos os stack frames empilhados, as chamadas feitas e os retornos exe-
+cutados para o cálculo do fatorial de 4. Usando esse mesmo modelo de rastreamento, faça a
+demonstração detalhada do rastreamente do cálculo de fib(4), desenhando cada stack frame
+que é criado ao longo do processo.
+
+	R:	
+
+(g) Modifique o problema dos coelhos de Fibonacci introduzindo uma regra adicional: cada par de
+coelhos pára de reproduzir após dar à luz 3 ninhadas. Como essa regra afetaria a relação de
+recorrência? Que alterações você precisaria fazer aos casos simples?
+
+	R:	
+
+(h) O que é uma função wrapper (invólucro)? por que elas são úteis na impementação de funções
+recursivas?
+
+	R:	Uma função que chama a função recursiva de verdade, simplificando o uso.
+
+(i) O que é recursão mútua?
+
+	R:	Quando uma função A chama a função B que chama a função A até uma delas achar o caso simples.

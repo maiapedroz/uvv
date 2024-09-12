@@ -68,12 +68,6 @@ int contagem_fib2(int n){
 }
 
 
-
-
-
-
-
-
 int fib_rec(int n){
 	if (n < 0)
 		return -1;
