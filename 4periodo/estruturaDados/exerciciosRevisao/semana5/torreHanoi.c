@@ -5,12 +5,12 @@ void moverPeca(int *origem, int Ox, int *destino, int Dx);
 int pegarOrigem(int *origem, int n);
 int pegarDestino(int *destino, int n);
 void passo(int *origem, int *destino, int *auxiliar, int n);
-void qualDestino(int *origem, int *destino, int *auxiliar, int n);
+int tamanhoSemZeros(int *torre, int n);
 
 
 int main(){
 
-	torreHanoi(3);
+	torreHanoi(5);
 
 	
 
@@ -36,7 +36,7 @@ void torreHanoi(int n){
 	}
 	
 	
-	while(destino[n-1] == 0){
+	while(total < 10){	//destino[n-1] == 0
 		
 		//printf("oi");
 		passo(origem, destino, auxiliar, n);
@@ -106,40 +106,46 @@ void passo(int *origem, int *destino, int *auxiliar, int n){
 		
 		Oa = pegarOrigem(auxiliar, n);
 		Do = pegarDestino(origem, n);	//destino quando for para origem
-		//printf("\nOa = %d\nDo = %d", Oa, Do);		
+		//printf("\nOa = %d\nDo = %d", Oa, Do);
+		
+		
 		if(n % 2 == 1){
+		
+			//	A[topo] = 1 não passa quando tamanho de B e C for impar
+			//	B[topo] = 1 não passa quando tamanho de A for zero
+			
+			
 			if(origem[0] != 0){
-				if(destino[0] == 0 || origem[Oo] < destino[Dd - 1]){	// A PORRA DO ERRO TA AQUI
-					moverPeca(origem, Oo, destino, Dd);		// mover origem para destino
-					printf("\norigem para destino");
-					return;
-				} else if(auxiliar[0] == 0 || origem[Oo] < auxiliar[Da - 1]){
-					moverPeca(origem, Oo, auxiliar, Da);	// mover origem para auxiliar
-					printf("\norigem para auxiliar");
-					return;
+			
+				if(origem[Oo] != 1 || (tamanhoSemZeros(destino, n) % 2 == 0 && tamanhoSemZeros(auxiliar, n) % 2 == 0)){
+				
+					if(destino[0] == 0 || origem[Oo] < destino[Dd - 1]){	// A PORRA DO ERRO TA AQUI
+						moverPeca(origem, Oo, destino, Dd);		// mover origem para destino
+						printf("\norigem para destino");
+						return;
+					} else if(auxiliar[0] == 0 || origem[Oo] < auxiliar[Da - 1]){
+						moverPeca(origem, Oo, auxiliar, Da);	// mover origem para auxiliar
+						printf("\norigem para auxiliar");
+						return;
+					}
 				}
-			}
+			}			
 			
-			if(auxiliar[Oa] != 0 && auxiliar[Oa] < destino[Dd - 1]){
-				printf("\nAuxiliar -> Destino 2");
-				moverPeca(auxiliar, Oa, destino, Dd);
-				return;
-			}
-			
-			if(destino[0] != 0 && destino[Od] != n - Od){
+			if(destino[0] != 0 && destino[Od] != n - Od && !(destino[Od] == 1 && tamanhoSemZeros(origem, n) == 0)){	// no passo 10 está chamando (auxiliar -> origem) invés de (Destino -> auxiliar)
 				printf("\nDa = %d",Da);
 				printf("\nOd = %d",Od);
 				if(auxiliar[0] == 0 || destino[Od] < auxiliar[Da - 1]){
 					printf("\nDestino -> Auxiliar");
 					moverPeca(destino, Od, auxiliar, Da);	//mover destino para auxiliar
 					return;
-				} else if(origem[0] == 0 || destino[Od] < origem[Do - 1]){
+				}/* else if(origem[0] == 0 || destino[Od] < origem[Do - 1]){
 					printf("\nDestino -> Origem");
-					moverPeca(destino, Od, origem, Do);		// mover destino para origem
+					moverPeca(destino, Od, origem, Do);		// mover destino para origem (PROIBIDO??)
 					return;
 				}
+				*/
 			}
-			printf("\ncontinua?");
+			
 			if(auxiliar[0] != 0){
 				if(origem[0] == 0 || auxiliar[Oa] < origem[Do - 1]){
 					printf("\nAuxiliar -> Origem");
@@ -151,6 +157,7 @@ void passo(int *origem, int *destino, int *auxiliar, int n){
 					return;
 				}
 			}
+			
 		} else{
 			if(origem[0] != 0){
 				if(destino[0] == 0 || origem[Oo] < destino[Dd]){	// A PORRA DO ERRO TA AQUI
@@ -181,4 +188,15 @@ void passo(int *origem, int *destino, int *auxiliar, int n){
 				return;
 			}
 		}
+}
+
+int tamanhoSemZeros(int *torre, int n){
+	int soma = 0;
+	
+	for(int i = 0; i < n; i++){
+		if(torre[i] != 0){
+			soma++;
+		}
+	}
+	return soma;
 }
