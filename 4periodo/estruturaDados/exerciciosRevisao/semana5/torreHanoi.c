@@ -4,15 +4,16 @@ void torreHanoi(int n);
 void moverPeca(int *origem, int Ox, int *destino, int Dx);
 int pegarOrigem(int *origem, int n);
 int pegarDestino(int *destino, int n);
-void passo(int *origem, int *destino, int *auxiliar, int n);
+int passo(int *origem, int *destino, int *auxiliar, int n, int ultimaPeca);
 int tamanhoSemZeros(int *torre, int n);
 
 
 int main(){
-
-	torreHanoi(5);
-
 	
+	int n;
+	printf("Escolha o tamanho da torre de hanoi: ");
+	scanf("%d", &n);
+	torreHanoi(n);
 
 	return 0;
 }
@@ -28,35 +29,16 @@ void torreHanoi(int n){
 		origem[i] = n - i;
 		destino[i] = 0;
 		auxiliar[i] = 0;
-		
-		
-		printf("\norigem[%d] = %d", i, origem[i]);
-		printf("\ndestino[%d] = %d", i, destino[i]);
-		printf("\nauxiliar[%d] = %d\n", i, auxiliar[i]);
 	}
 	
-	
-	while(total < 10){	//destino[n-1] == 0
+	int ultimaPeca = 0;
+	while(destino[n - 1] == 0){	//destino[n-1] == 0
 		
-		//printf("oi");
-		passo(origem, destino, auxiliar, n);
+		ultimaPeca = passo(origem, destino, auxiliar, n, ultimaPeca);
 		total++;
-		//destino[n-1] = 1;
-		
-		for(int i = 0; i < n; i++){
-			printf("\n\norigem[%d] = %d", i, origem[i]);
-			printf("\ndestino[%d] = %d", i, destino[i]);
-			printf("\nauxiliar[%d] = %d\n", i, auxiliar[i]);
-		}
-	}
-	printf("\ntotal = %d", total);
-	
-	for(int i = 0; i < n; i++){
-		printf("\norigem[%d] = %d", i, origem[i]);
-		printf("\ndestino[%d] = %d", i, destino[i]);
-		printf("\nauxiliar[%d] = %d\n", i, auxiliar[i]);
 	}
 	
+	printf("\n\nTotal de passos para solucionar Hanoi(%d):	%d", n, total);
 }
 
 
@@ -71,8 +53,6 @@ int pegarOrigem(int *origem, int n){
 	
 	for(int i = n - 1; i >= 0; i--){
 		if(origem[i] != 0){
-			//printf("\nn = %d", n);
-			//printf("\ni = %d", i);
 			return i;
 		}
 	}
@@ -91,22 +71,19 @@ int pegarDestino(int *destino, int n){
 	
 }
 
-void passo(int *origem, int *destino, int *auxiliar, int n){
+int passo(int *origem, int *destino, int *auxiliar, int n, int ultimaPeca){
 
 		int Oo, Od, Oa;	// indices quando for origem
 		int Do, Dd, Da;	// indices quando for destino
 		
 		Oo = pegarOrigem(origem, n);
 		Dd = pegarDestino(destino, n);	//destino quando for para destino
-		//printf("\nOo = %d\nDd = %d", Oo, Dd);
 		
 		Od = pegarOrigem(destino, n);
 		Da = pegarDestino(auxiliar, n);	//destino quando for para auxiliar
-		//printf("\nOd = %d\nDa = %d", Od, Da);
 		
 		Oa = pegarOrigem(auxiliar, n);
 		Do = pegarDestino(origem, n);	//destino quando for para origem
-		//printf("\nOa = %d\nDo = %d", Oa, Do);
 		
 		
 		if(n % 2 == 1){
@@ -115,77 +92,81 @@ void passo(int *origem, int *destino, int *auxiliar, int n){
 			//	B[topo] = 1 não passa quando tamanho de A for zero
 			
 			
-			if(origem[0] != 0){
+			if(origem[0] != 0 && origem[Oo] != ultimaPeca){		// tem algo para mover da pilha A?
 			
-				if(origem[Oo] != 1 || (tamanhoSemZeros(destino, n) % 2 == 0 && tamanhoSemZeros(auxiliar, n) % 2 == 0)){
-				
-					if(destino[0] == 0 || origem[Oo] < destino[Dd - 1]){	// A PORRA DO ERRO TA AQUI
-						moverPeca(origem, Oo, destino, Dd);		// mover origem para destino
-						printf("\norigem para destino");
-						return;
-					} else if(auxiliar[0] == 0 || origem[Oo] < auxiliar[Da - 1]){
-						moverPeca(origem, Oo, auxiliar, Da);	// mover origem para auxiliar
-						printf("\norigem para auxiliar");
-						return;
-					}
+				if(destino[0] == 0 || origem[Oo] < destino[Dd - 1]){	// move somente se o destino puder receber
+					moverPeca(origem, Oo, destino, Dd);		// mover origem para destino
+					printf("\nA -> B");
+					return destino[Dd];
+				} else if(auxiliar[0] == 0 || origem[Oo] < auxiliar[Da - 1]){
+					moverPeca(origem, Oo, auxiliar, Da);	// mover origem para auxiliar
+					printf("\nA -> C");
+					return auxiliar[Da];
 				}
-			}			
+			}		
 			
-			if(destino[0] != 0 && destino[Od] != n - Od && !(destino[Od] == 1 && tamanhoSemZeros(origem, n) == 0)){	// no passo 10 está chamando (auxiliar -> origem) invés de (Destino -> auxiliar)
-				printf("\nDa = %d",Da);
-				printf("\nOd = %d",Od);
+			if(destino[0] != 0 && destino[Od] != ultimaPeca){	// tem algo para mover da pilha B? e é diferente da ultima peça movida?
 				if(auxiliar[0] == 0 || destino[Od] < auxiliar[Da - 1]){
-					printf("\nDestino -> Auxiliar");
+					printf("\nB -> C");
 					moverPeca(destino, Od, auxiliar, Da);	//mover destino para auxiliar
-					return;
-				}/* else if(origem[0] == 0 || destino[Od] < origem[Do - 1]){
-					printf("\nDestino -> Origem");
-					moverPeca(destino, Od, origem, Do);		// mover destino para origem (PROIBIDO??)
-					return;
+					return auxiliar[Da];
+				} else if(origem[0] == 0 || destino[Od] < origem[Do - 1]){
+					printf("\nB -> A");
+					moverPeca(destino, Od, origem, Do);		// mover destino para origem
+					return origem[Do];
 				}
-				*/
+				
 			}
 			
-			if(auxiliar[0] != 0){
+			if(auxiliar[0] != 0 && auxiliar[Oa] != ultimaPeca){	// tem algo para mover da pilha C? e é diferente da ultima peça movida?
 				if(origem[0] == 0 || auxiliar[Oa] < origem[Do - 1]){
-					printf("\nAuxiliar -> Origem");
+					printf("\nC -> A");
 					moverPeca(auxiliar, Oa, origem, Do);	//mover auxiliar para origem
-					return;
+					return origem[Do];
 				} else if(destino[0] == 0 || auxiliar[Oa] < destino[Dd - 1]){
-					printf("\nAuxiliar -> Destino");
+					printf("\nC -> B");
 					moverPeca(auxiliar, Oa, destino, Dd);	// mover auxiliar para destino
-					return;
+					return destino[Dd];
 				}
 			}
 			
 		} else{
-			if(origem[0] != 0){
-				if(destino[0] == 0 || origem[Oo] < destino[Dd]){	// A PORRA DO ERRO TA AQUI
-					moverPeca(origem, Oo, destino, Dd);		// mover origem para destino
-					return;
-				} else if(auxiliar[0] == 0 || origem[Oo] < auxiliar[Da]){
+		
+			if(origem[0] != 0 && origem[Oo] != ultimaPeca){		// tem algo para mover da pilha A?
+			
+				if(auxiliar[0] == 0 || origem[Oo] < auxiliar[Da - 1]){
 					moverPeca(origem, Oo, auxiliar, Da);	// mover origem para auxiliar
-					return;
+					printf("\nA -> C");
+					return auxiliar[Da];
+				} else if(destino[0] == 0 || origem[Oo] < destino[Dd - 1]){	// move somente se o destino puder receber
+					moverPeca(origem, Oo, destino, Dd);		// mover origem para destino
+					printf("\nA -> B");
+					return destino[Dd];
+				}
+			}	
+			
+			if(destino[0] != 0 && destino[Od] != ultimaPeca){	// tem algo para mover da pilha B? e é diferente da ultima peça movida?
+				if(origem[0] == 0 || destino[Od] < origem[Do - 1]){
+					printf("\nB -> A");
+					moverPeca(destino, Od, origem, Do);		// mover destino para origem
+					return origem[Do];
+				} else if(auxiliar[0] == 0 || destino[Od] < auxiliar[Da - 1]){
+					printf("\nB -> C");
+					moverPeca(destino, Od, auxiliar, Da);	//mover destino para auxiliar
+					return auxiliar[Da];
 				}
 			}
 			
-			if(destino[0] != 0){
-				if(auxiliar[Da] == 0 && destino[Od] < auxiliar[Da - 1]){
-					moverPeca(destino, Od, auxiliar, Da);	//mover destino para auxiliar
-					return;
-				} else if(origem[Do] == 0 && destino[Od] < origem[Do - 1]){
-					moverPeca(destino, Od, origem, Do);		// mover destino para origem
-					return;
+			if(auxiliar[0] != 0 && auxiliar[Oa] != ultimaPeca){	// tem algo para mover da pilha C? e é diferente da ultima peça movida?
+				if(destino[0] == 0 || auxiliar[Oa] < destino[Dd - 1]){
+					printf("\nC -> B");
+					moverPeca(auxiliar, Oa, destino, Dd);	// mover auxiliar para destino
+					return destino[Dd];
+				} else if(origem[0] == 0 || auxiliar[Oa] < origem[Do - 1]){
+					printf("\nC -> A");
+					moverPeca(auxiliar, Oa, origem, Do);	//mover auxiliar para origem
+					return origem[Do];
 				}
-			}
-			// quando auxiliar[0] != 0
-			if(origem[Do] == 0 && auxiliar[Oa] < origem[Do - 1]){
-				printf("Auxiliar -> Origem");
-				moverPeca(auxiliar, Oa, origem, Do);	//mover auxiliar para origem
-				return;
-			} else if(destino[Dd] == 0 && auxiliar[Oa] < destino[Dd - 1]){
-				moverPeca(auxiliar, Oa, destino, Dd);	// mover auxiliar para destino
-				return;
 			}
 		}
 }
