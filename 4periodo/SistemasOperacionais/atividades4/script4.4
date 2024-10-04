@@ -1,0 +1,24 @@
+# crie um comando utilizando os conceitos de canalização e
+# redirecionamento que execute passo a passo a mesma função do comando sort -n
+
+# grep "" clientes | cut -d' ' -f1
+
+indice=1
+arq_temp=$(mktemp)
+
+{while read -r linha1; do
+	menor=$(echo "$linha1" | awk '{print $1}')
+	echo "linha observada: $indice"
+	while read -r linha; do
+		numero=$(echo "$linha" | awk '{print $1}')
+		echo "valor observado: $numero"
+		# Comparar o número extraído com o menor valor
+		if [ "$numero" -le "$menor" ]; then
+        		menor="$numero"
+		fi
+	done < <(tail -n +"$((indice+1))" clientes)
+	((indice++))
+
+#	echo "$menor" >> arq_temp
+done < clientes
+} 
