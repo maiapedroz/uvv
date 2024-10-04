@@ -1,26 +1,11 @@
-awk '{
-    lines[NR] = $0  # Armazena a linha inteira no array 'lines'
-    codes[NR] = $1   # Armazena o código do aluno (primeiro campo) no array 'codes'
-}
+awk '{lines[NR] = $0; codes[NR] = $1} 
 END {
-    # Bubble Sort para ordenar as linhas com base nos códigos
-    for (i = 1; i <= NR; i++) {
-        for (j = i + 1; j <= NR; j++) {
+    for (i = 1; i <= NR; i++)
+        for (j = i + 1; j <= NR; j++)
             if (codes[i] > codes[j]) {
-                # Troca os códigos
-                temp_code = codes[i]
-                codes[i] = codes[j]
-                codes[j] = temp_code
-
-                # Troca as linhas correspondentes
-                temp_line = lines[i]
-                lines[i] = lines[j]
-                lines[j] = temp_line
+                temp = lines[i]; lines[i] = lines[j]; lines[j] = temp;
+                temp_code = codes[i]; codes[i] = codes[j]; codes[j] = temp_code;
             }
-        }
-    }
-    # Imprime as linhas ordenadas
-    for (i = 1; i <= NR; i++) {
-        print lines[i]
-    }
+    for (i = 1; i <= NR; i++) print lines[i]
 }' clientes
+
