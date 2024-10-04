@@ -1,24 +1,26 @@
-# crie um comando utilizando os conceitos de canalização e
-# redirecionamento que execute passo a passo a mesma função do comando sort -n
+awk '{
+    lines[NR] = $0  # Armazena a linha inteira no array 'lines'
+    codes[NR] = $1   # Armazena o código do aluno (primeiro campo) no array 'codes'
+}
+END {
+    # Bubble Sort para ordenar as linhas com base nos códigos
+    for (i = 1; i <= NR; i++) {
+        for (j = i + 1; j <= NR; j++) {
+            if (codes[i] > codes[j]) {
+                # Troca os códigos
+                temp_code = codes[i]
+                codes[i] = codes[j]
+                codes[j] = temp_code
 
-# grep "" clientes | cut -d' ' -f1
-
-indice=1
-arq_temp=$(mktemp)
-
-{while read -r linha1; do
-	menor=$(echo "$linha1" | awk '{print $1}')
-	echo "linha observada: $indice"
-	while read -r linha; do
-		numero=$(echo "$linha" | awk '{print $1}')
-		echo "valor observado: $numero"
-		# Comparar o número extraído com o menor valor
-		if [ "$numero" -le "$menor" ]; then
-        		menor="$numero"
-		fi
-	done < <(tail -n +"$((indice+1))" clientes)
-	((indice++))
-
-#	echo "$menor" >> arq_temp
-done < clientes
-} 
+                # Troca as linhas correspondentes
+                temp_line = lines[i]
+                lines[i] = lines[j]
+                lines[j] = temp_line
+            }
+        }
+    }
+    # Imprime as linhas ordenadas
+    for (i = 1; i <= NR; i++) {
+        print lines[i]
+    }
+}' clientes
