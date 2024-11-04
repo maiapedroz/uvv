@@ -227,7 +227,7 @@ int get_confAceleracao(MPU mpu);
  *	da sensibilidade no giroscópio, como um valor int.
  */
  
-int get_confRotaco(MPU mpu);
+int get_confRotacao(MPU mpu);
 
 /**
  *	FUNÇÃO: get_tratado_ax;
@@ -237,7 +237,7 @@ int get_confRotaco(MPU mpu);
  *	armazenado da aceleração no eixo X, como um valor int.
  */
 
-int get_tratado_ax(MPU mpu);
+double get_tratado_ax(MPU mpu);
 
 /**
  *	FUNÇÃO: get_tratado_ay;
@@ -246,7 +246,7 @@ int get_tratado_ax(MPU mpu);
  *	Esta função recebe como argumento um MPU mpu e retorna o valor tratado 
  *	armazenado da aceleração no eixo Y, como um valor int.
  */
-int get_tratado_ay(MPU mpu);
+double get_tratado_ay(MPU mpu);
 
 /**
  *	FUNÇÃO: get_tratado_az;
@@ -256,7 +256,7 @@ int get_tratado_ay(MPU mpu);
  *	armazenado da aceleração no eixo Z, como um valor int.
  */
  
-int get_tratado_az(MPU mpu);
+double get_tratado_az(MPU mpu);
 
 /**
  *	FUNÇÃO: get_tratado_rx;
@@ -266,7 +266,7 @@ int get_tratado_az(MPU mpu);
  *	armazenado da rotação no eixo X, como um valor int.
  */
 
-int get_tratado_rx(MPU mpu);
+double get_tratado_rx(MPU mpu);
 
 /**
  *	FUNÇÃO: get_tratado_ry;
@@ -276,7 +276,7 @@ int get_tratado_rx(MPU mpu);
  *	armazenado da rotação no eixo Y, como um valor int.
  */
 
-int get_tratado_ry(MPU mpu);
+double get_tratado_ry(MPU mpu);
 
 /**
  *	FUNÇÃO: get_tratado_rz;
@@ -286,7 +286,7 @@ int get_tratado_ry(MPU mpu);
  *	armazenado da rotação no eixo Z, como um valor int.
  */
 
-int get_tratado_rz(MPU mpu);
+double get_tratado_rz(MPU mpu);
 
 /*	Finaliza boilerplate:	*/
 
