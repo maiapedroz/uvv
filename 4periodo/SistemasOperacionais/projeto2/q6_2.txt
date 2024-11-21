@@ -1,0 +1,22 @@
+6.2
+
+A partir do Shell, execute um programa em background (por exemplo, o navegador web).
+
+firefox &
+
+Observe a árvore hierárquica de processos e visualize as dependências destes processos.
+
+pstree -p
+pstree -p | grep firefox
+
+Observe ainda seu PID e PPID e compare aos do bash.
+
+ps -o pid,ppid,comm | grep firefox
+ps -p $$ -o pid,ppid,comm
+
+
+Verifique também o comando jobs. Ele mostra a situação de todos os processos que estão
+em background naquele Shell.
+
+jobs
+

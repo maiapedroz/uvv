@@ -1,0 +1,16 @@
+6.1
+ 
+Pesquise as opções do comando ps e crie um comando para listar apenas os identificadores
+e nomes dos processos que estão no estado R (running).
+
+ps -e -o pid,comm,state | awk '$3 == "R" {print $1, $2}'
+
+Verifique também o comando top, uma versão interativa do comando ps, atualizando a lis-
+tagem de processos a cada n segundos e ordenando-os por uso de CPU e memória.
+
+top
+
+top -d 2
+ 
+top (+ apertar M)
+top (+ apertar P)

@@ -1,0 +1,14 @@
+Atividade 6.4 – Usando testes dentro dos scripts
+
+
+Crie um script que mostra qual é o usuário atual, qual o diretório atual e o Shell que está usando.
+Uma dica é lembrar que no arquivo /etc/passwd encontram-se listados os usuários e seus shells.
+Use o comando cut com a sintaxe:
+cut -d DELIMITADOR -f NUMERO_DO_CAMPO
+O comando cut corta somente o(s) campo(s) de número NUMERO_DO_CAMPO e utiliza o sepa-
+rador DELIMITADOR para delimitar cada campo. No caso do arquivo passwd, o delimitador é “:”.
+
+q6_4.sh
+chmod +x q6_4.sh
+./q6_4.sh
+

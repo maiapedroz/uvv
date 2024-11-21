@@ -1,0 +1,8 @@
+6.3
+
+Utilize o daemon cron para realizar um backup daqui a cinco minutos dos arquivos .log da
+pasta /var/log. O arquivo de backup deve ser compactado e colocado dentro de sua pasta.
+
+crontab -e
+*/5 * * * * tar -zcvf ~/backup_logs.tar.gz /var/log/*.log
+crontab -l
