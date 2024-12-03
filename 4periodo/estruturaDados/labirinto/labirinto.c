@@ -83,7 +83,7 @@ void ler_mapa_labirinto(string arquivo) {
     posicao_inicial.x = idxi % (largura + 1);
     posicao_inicial.y = (altura - 1) - ( idxi / (largura + 1));
 
-    printf("Mapa:\n%s\n", mapa);
+    
 
     fclose(arq);
 }
@@ -107,7 +107,7 @@ pontoT pegar_posicao_inicial(void) {
 bool saiu_do_labirinto(pontoT pt) {
     if (pt.x < 0 || pt.x >= largura || pt.y < 0 || pt.y >= altura) {
         mapa[indice(posicao_inicial.x, posicao_inicial.y)] = 'I';
-        printf("Resolução:\n%s", mapa);
+        printf("%s", mapa);
 
         // Libera o mapa da memória:
         free(mapa);

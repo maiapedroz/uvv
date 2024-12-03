@@ -36,9 +36,9 @@ int main (void)
     ler_mapa_labirinto("arquivo.txt");
 
     if (resolver_labirinto(pegar_posicao_inicial()))
-        printf("As posições com X marcam o caminho para a saída.\n");
+        printf("Os Xs levam a saída\n");
     else
-        printf("Não existe saída do labirinto.\n");
+        printf("Não existe saída.\n");
 }
 
 /* Definições de Subprogramas: */
