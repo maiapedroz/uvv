@@ -21,4 +21,8 @@ set FLASK_APP=bloguvv.py
 $env:FLASK_DEBUG = 1
 flask run
 ```
-
+### Inicio BD
+```
+pip install flask-sqlalchemy flask-migrate
+flask db init
+```
